@@ -21,8 +21,8 @@ SELECT * FROM amigos order by nome asc;
 SELECT nome FROM amigos order by nome asc;
 
 --Quero todos os numeros que comecem com 5
-Select * from telefones where numero like '5%'
-Select * from amigos where nome like 'd%'
+Select * from telefones where numero like '5%';
+Select * from amigos where nome like 'd%';
 
 -- Selecionando dois atributos de uma mesma tabela
 SELECT id, nome from amigos;
