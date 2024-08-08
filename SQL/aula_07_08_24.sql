@@ -31,3 +31,8 @@ SELECT id, nome from amigos;
 SELECT 10*5;
 
 
+
+--CRUD
+-- Atualiza o nome Cristina para Maria (não deleta e sim substitui)
+UPDATE amigos set nome = "Maria" where nome = "Cristina"; --para essa opção funcionar tem que desabilitar a segurança
+UPDATE amigos set nome = "Maria" where id = "5";
