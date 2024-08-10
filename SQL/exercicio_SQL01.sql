@@ -36,6 +36,7 @@ CREATE TABLE `exercicio_sql01`.`cursos` (
     SELECT * FROM alunos where id = 1;
 
     --Crie uma tabela chamada Clientes com as colunas ID (inteiro, chave primária), Nome (texto), Idade (inteiro) e Cidade (texto).
+    Drop table clientes;
     CREATE TABLE `exercicio_sql01`.`clientes` (
     `id_clientes` INT(10) NOT NULL AUTO_INCREMENT,
     `nome_clientes` VARCHAR(50) NOT NULL,
@@ -54,16 +55,18 @@ CREATE TABLE `exercicio_sql01`.`cursos` (
 
 
   --Crie uma tabela chamada Pedidos com as colunas PedidoID (inteiro, chave primária), ClienteID (inteiro, chave estrangeira referenciando a tabela Clientes), DataPedido (data) e ValorTotal (decimal).
-     CREATE TABLE `exercicio_sql01`.`pedidos` (
-    `id_pedido` INT(10) NOT NULL AUTO_INCREMENT,
-    `nome_clientes` VARCHAR(50) NOT NULL,
-    `idade` INT(4) NOT NULL,
-    `cidade` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (`id_clientes`));  
+  DROP TABLE IF EXISTS `pedidos`;
+    CREATE TABLE IF NOT EXISTS `pedidos` (
+        `id_pedidos` INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `id_clientes` INT(10) NOT NULL,
+        `data_pedido` DATETIME NOT NULL,
+  	    `valor_total` Varchar(10) NOT NULL,
+        CONSTRAINT `FK_clientes` FOREIGN KEY (`id_clientes`) REFERENCES `clientes`(`id`) ON DELETE CASCADE
+    )ENGINE = InnoDB;
   
   --Insira dois registros fictícios na tabela. 
 
-  
+
   --Escreva uma consulta SQL para selecionar o Nome do cliente e a DataPedido para todos os pedidos.
 
 

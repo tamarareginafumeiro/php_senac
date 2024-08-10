@@ -59,7 +59,7 @@ SELECT id, nome, email FROM clientes LIMIT 10;
 ----Buscar os 10 ultimos nomes tabela
 SELECT id, nome, email FROM clientes order by id desc LIMIT 10;
 
--- ele pegara 20 dados a partir do id 6: (offset é apartir do que vc deseja)
+-- ele pegara 20 dados a partir do id 6: (offset é apartir do que vc deseja, vai iguinorar do offsert para cima)
 SELECT id, nome, email FROM clientes order by id desc LIMIT 20 offset 5;
 
 
