@@ -30,9 +30,45 @@ SELECT id, nome from amigos;
 -- Fazendo uma conta de multiplicação
 SELECT 10*5;
 
+--Cresente
+SELECT produto FROM produtos ORDER BY produto asc;
+SELECT nome, email, cidade FROM clientes ORDER BY nome asc;
+
+--Decrescente
+SELECT produto FROM produtos ORDER BY produto DESC;
+SELECT nome, email, cidade FROM clientes ORDER BY nome DESC;
+ 
+--Desta forma a ordem vem por cidade e despois nome.
+SELECT nome, email, cidade FROM clientes ORDER BY cidade, nome;
+
+-- Para ordemar de forma simultanea usamos a seguinte query
+SELECT nome, email, cidade FROM clientes ORDER BY cidade asc, nome asc;
+SELECT nome, email, cidade FROM clientes ORDER BY cidade DESC, nome DESC;
+SELECT nome, email, cidade FROM clientes ORDER BY cidade DESC, nome asc;
+SELECT nome, email, cidade FROM clientes ORDER BY cidade asc, nome DESC;
+
+-- Organizar a tabela "produto" do mais caro para o mais barato
+SELECT id, produto, preco_unidade FROM produtos ORDER BY preco_unidade DESC,
+
+-- encomendas mais recentes
+SELECT * FROM encomendas ORDER BY data_hora DESC;
+
+--Buscar os 10 primeiros nomes tabela
+SELECT id, nome, email FROM clientes LIMIT 10;
+
+----Buscar os 10 ultimos nomes tabela
+SELECT id, nome, email FROM clientes order by id desc LIMIT 10;
+
+-- ele pegara 20 dados a partir do id 6: (offset é apartir do que vc deseja)
+SELECT id, nome, email FROM clientes order by id desc LIMIT 20 offset 5;
+
+
 
 
 --CRUD
 -- Atualiza o nome Cristina para Maria (não deleta e sim substitui)
 UPDATE amigos set nome = "Maria" where nome = "Cristina"; --para essa opção funcionar tem que desabilitar a segurança
 UPDATE amigos set nome = "Maria" where id = "5";
+
+
+
