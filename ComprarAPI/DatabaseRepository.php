@@ -1,27 +1,35 @@
 <?php
 
 class DatabaseRepository {
-    private $dsn = 'mysql:host=localhost;dbname=lista_compras';
-    private $username = 'root';
-    private $password = '';
+    private static $dsn = 'mysql:host=localhost;dbname=lista_compras2';
+    private static $username = 'root';
+    private static $password = '';
 
-    public function connect() {
-
+    public static function connect() {        
+        try {
+            $pdo = new PDO(self::$dsn, self::$username, self::$password);
+            return $pdo;
+        } catch (PDOException $e) {
+            echo 'Erro de conexão: ' . $e->getMessage();
+        }
     }
 
-    public function getAllItems() {
-        return "Retornou todos os itens com sucesso";
-    }
+    public static function getAllItems() {
+        $pdo = self:: connect();
+        $sql = "SELECT * From itens_compra";
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
-    public function addItem() {
+    public static function addItem() {
         return "Adicionou o item com sucesso";
     }
 
-    public function updateItem() {
+    public static function updateItem() {
         return "Atualizou o item com sucesso";
     }
 
-    public function deleteItem() {
+    public static function deleteItem() {
         return "Deletou o item com sucesso";
     }
 }
