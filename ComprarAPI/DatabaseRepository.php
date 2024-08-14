@@ -1,7 +1,7 @@
 <?php
 
 class DatabaseRepository {
-    private static $dsn = 'mysql:host=localhost;dbname=lista_compras2';
+    private static $dsn = 'mysql:host=localhost;dbname=lista_compras';
     private static $username = 'root';
     private static $password = '';
 
@@ -15,21 +15,27 @@ class DatabaseRepository {
     }
 
     public static function getAllItems() {
-        $pdo = self:: connect();
-        $sql = "SELECT * From itens_compra";
+        $pdo = self::connect();
+        $sql = "SELECT * FROM itens_compra";
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+    }
 
-    public static function addItem() {
-        return "Adicionou o item com sucesso";
+    public static function addItem($nome_produto, $quantidade) {
+        $pdo = self::connect();
+        $sql = "INSERT INTO itens_compra (nome_produto, quantidade) VALUES (:nome_produto, :quantidade)";
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute(['nome_produto' => $nome_produto, 'quantidade' => $quantidade]);
     }
 
     public static function updateItem() {
         return "Atualizou o item com sucesso";
     }
 
-    public static function deleteItem() {
-        return "Deletou o item com sucesso";
+    public static function deleteItem($id) {
+        $pdo = self::connect();
+        $sql = "DELETE FROM itens_compra WHERE id = :id";
+        $stmt = $pdo->prepare($sql);        
+        return $stmt->execute(['id' => $id]);
     }
 }
