@@ -136,6 +136,72 @@ select nome from clientes where nome like "francisc_%";
 -- Neste caso  o "_" está buscando caracteres não especificado, porém o terceiro caracter deverá ser a letra "A"
 select nome from clientes where nome like "___a%";
 
+-- Buscar as primerias 5 encomendas, ajudando duas tabelas: ecomendas e clientes
+SELECT clientes.nome, encomendas.id FROM clientes, encomendas where clientes.id = encomendas.id_cliente LIMIT 5;
+
+--mesma query com ALIAS
+SELECT c.nome, e. * FROM cliente c, ecomendas e where c.id = e.id_cliente LIMIT 5;
+
+--CONCATEÇÃO ENTRE COLUNAS
+-- CONCAT
+select concat('O meu nome é ', nome, 'e meu e-mail é: ', email) frase from clientes LIMIT 10;
+
+--======== JOINS ======
+/*(INNER) Join == Registros de retorno que têm valores correspondentes em ambas as tabelas
+ 
+LEFT JOIN == Retorna todos os registros da tabela da esquerda  e os registros combinados da tabela da direita
+ 
+RIGHT JOIN == Retorna todos os registros da tabela da direita, e os registros
+combinados da tabela da esquerda
+ 
+FULL JOIN == Devolve todos os registros quando há uma correspondência
+na tabela da esquerda ou da direita
+ 
+mostrar a tabela de conjuntos do joins
+https://alyssontmv.wordpress.com/2014/09/30/representando-sql-joins-graficamente-exemplo-usado-em-aula/ 
+
+=== Relações===
+encomendas X clientes
+encomendas X colaboradores
+encomendas_produtos X encomendas X  produtos
+*/
+
+ -- Queremos dados cobre as encomendas de um cliente cujo o id = 20.
+SELECT c. *, e.* 
+FROM clientes c 
+LEFT JOIN encomendas e
+on c.id = e.id_cliente
+where c.id = 20;
+
+-- 20 primeiros clientes que fizeram encomendas na loja.
+SELECT e.id, e.data_hora, c.nome, c.email
+FROM encomendas e 
+LEFT JOIN clientes c
+on e.id_cliente = c.id
+LIMIT 20;  
+
+--detalhes de 3 encomendas
+-- quando foi efetuada a compra
+-- que produtos foram comprados e as quantidades 
+select
+e.id,
+e.data_hora,
+p.produto,
+ep.quantidade
+from encomendas_produtos ep left join 
+encomendas e
+on e.id = ep.id_encomenda
+left join produtos p
+on p.id = ep.id_produto
+where e.id = 3;
+
+
+
+
+
+
+
+
 
 --CRUD
 -- Atualiza o nome Cristina para Maria (não deleta e sim substitui)
