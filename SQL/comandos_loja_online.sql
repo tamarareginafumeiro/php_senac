@@ -1,31 +1,5 @@
 --Selecionando uma tabela
-SELECT * FROM telefones;
-SELECT * FROM amigos;
-
--- Selecionando uma tuplada tabela (tupla=linha)
-SELECT * FROM telefones where id = 5;
-
-Select amigos.nome, telefones.id_amigo from amigos, telefones where amigos.id = telefones.id_amigo and telefones.id_amigo = 5;
-
--- Selecionando apenas o telefone da cristina
-Select amigos.nome, telefones.numero from amigos, telefones where amigos.id = telefones.id_amigo and amigos.nome = "Cristina";
-
--- Quero a mesma query, mas com o nome da coluna igual ao nome da cristina
-Select telefones.numero 'Cristina' from amigos, telefones where amigos.id = telefones.id_amigo and amigos.nome;
-
---Selecionando uma coluna da tabela:
-SELECT nome from amigos;
-
---obter dados dos clientes ordenados por ordem alfabetica do nome
-SELECT * FROM amigos order by nome asc;
-SELECT nome FROM amigos order by nome asc;
-
---Quero todos os numeros que comecem com 5
-Select * from telefones where numero like '5%';
-Select * from amigos where nome like 'd%';
-
--- Selecionando dois atributos de uma mesma tabela
-SELECT id, nome from amigos;
+SELECT * FROM loja_online;
 
 -- Fazendo uma conta de multiplicação
 SELECT 10*5;
@@ -195,18 +169,115 @@ left join produtos p
 on p.id = ep.id_produto
 where e.id = 3;
 
+--Trazendo valores -- CONCAT == concatenação
+select
+e.id,
+e.data_hora,
+p.produto,
+ep.quantidade,
+p.preco_unidade * ep.quantidade as total
+from encomendas_produtos ep left join 
+encomendas e
+on e.id = ep.id_encomenda
+left join produtos p
+on p.id = ep.id_produto
+where e.id = 3;
+
+-- valores com quantidade -- round == vai arredondar os valores para duas casas decimais
+select
+e.id,
+e.data_hora,
+p.produto,
+ep.quantidade,
+concat(round(p.preco_unidade * ep.quantidade,2), 'R$') as total
+from encomendas_produtos ep left join 
+encomendas e
+on e.id = ep.id_encomenda
+left join produtos p
+on p.id = ep.id_produto
+where e.id = 3;
+
+-- Quero saber qual é o primeiro cliente de Lisboa na tabela cliente.
+--MIN - Permite ver o valor mínimo em um conjunto de resultado
+select id, nome from clientes where cidade = "Lisboa" LIMIT 1;
+Select MIN(id), nome from clientes where cidade = "Lisboa";
+
+--MAX - Permite ver o valor máximo em um conjunto de resultado
+select MAX(id), nome from clientes where email like "%@gmail.com";
+
+--AVG - permite calcular a média de um conjunto de resultados NÚMERICO
+select AVG(preco_unidade) preco_medio from produtos; -- sem arrendoar
+select round( AVG(preco_unidade),2) preco_medio from produtos; --arredondando para duas casas após a virgula
+
+--SUM - Permite ver o somatorio (calculo total) de cum conjunto de resultados.
+SELECT SUM(preco_unidade) total_preco from produtos;-- sem arrendoar
+SELECT round(SUM(preco_unidade),2) total_preco from produtos;--arredondando para duas casas após a virgula
+
+--Desafio: Vamos calcular uma determinada encomenda, buscando primeiramente seus dados (id-50)
+
+SELECT
+e.id, -- atributo da tabela encomenda
+e.data_hora,-- atributo da tabela encomenda
+p.produto,-- atributo da tabela produto
+p.preco_unidade,-- atributo da tabela produto
+ep.quantidade, -- atributo da tabela encomenda_produto
+from encomendas_produtos ep
+LEFT join encomendas e 
+on ep.id_encomenda = e.id
+LEFT join produtos p
+on ep.id_produto = p.id
+where e.id = 50;
+---- 3 produtos (preco_unidade * quantidade)
+SELECT
+e.id, -- atributo da tabela encomenda
+e.data_hora,-- atributo da tabela encomenda
+p.produto,-- atributo da tabela produto
+p.preco_unidade,-- atributo da tabela produto
+ep.quantidade, -- atributo da tabela encomenda_produto
+round(p. preco_unidade * quantidade,2) as total -- para acresecentar casas decimais
+from encomendas_produtos ep
+LEFT join encomendas e 
+on ep.id_encomenda = e.id
+LEFT join produtos p
+on ep.id_produto = p.id
+where e.id = 50;
+
+
+
+SELECT
+e.id, -- atributo da tabela encomenda
+e.data_hora,-- atributo da tabela encomenda
+p.produto,-- atributo da tabela produto
+p.preco_unidade,-- atributo da tabela produto
+ep.quantidade, -- atributo da tabela encomenda_produto
+CAST(ep.quantidade *p. preco_unidade As decimal(10,2)) As total -- para acresecentar casas decimais
+from encomendas_produtos ep
+LEFT join encomendas e 
+on ep.id_encomenda = e.id
+LEFT join produtos p
+on ep.id_produto = p.id
+where e.id = 50;
+
+--subquery
+select id_encomenda, id_cliente, SUM(total) total
+from
+(
+    select
+    ep.id_encomenda,
+    e.id_cliente,
+    ep.quantidade,
+    p.produto,
+    CAST(ep.quantidade *p. preco_unidade As decimal(10,2)) As total 
+    from encomendas_produtos ep
+    LEFT join produtos p on ep.id_produto = p.id
+    LEFT join encomendas e on ep.id_encomenda = e.id
+    where e.id = 50
+)a
+Group by id_encomenda
 
 
 
 
-
-
-
-
---CRUD
--- Atualiza o nome Cristina para Maria (não deleta e sim substitui)
-UPDATE amigos set nome = "Maria" where nome = "Cristina"; --para essa opção funcionar tem que desabilitar a segurança
-UPDATE amigos set nome = "Maria" where id = "5";
 
 
 
