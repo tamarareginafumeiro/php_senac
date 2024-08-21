@@ -1,7 +1,7 @@
 <?php
 
 class DatabaseRepository {
-    private static $dsn = 'mysql:host=localhost;dbname=lista_compras';
+    private static $dsn = 'mysql:host=localhost;dbname=lista_compras2';
     private static $username = 'root';
     private static $password = '';
 
@@ -28,8 +28,18 @@ class DatabaseRepository {
         return $stmt->execute(['nome_produto' => $nome_produto, 'quantidade' => $quantidade]);
     }
 
-    public static function updateItem() {
-        return "Atualizou o item com sucesso";
+    public static function updateItem($id, $nome_produto, $quantidade, $comprado) {
+        $pdo = self::connect();
+        $sql = "UPDATE itens_compra SET nome_produto=:nome_produto, quantidade=:quantidade, comprado=:comprado
+                WHERE id=:id";
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            'nome_produto' => $nome_produto,
+            'quantidade' => $quantidade,
+            'comprado' => $comprado,
+            'id' => $id
+        ]);
     }
 
     public static function deleteItem($id) {
