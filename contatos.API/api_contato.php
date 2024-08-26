@@ -20,5 +20,4 @@ switch($action) {
         echo json_encode(['error' => 'Acao invalida']);
 }
 
-
 ?>

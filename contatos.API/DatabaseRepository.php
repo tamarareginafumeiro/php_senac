@@ -1,7 +1,7 @@
 <?php
 
 class DatabaseRepository {
-    private static $dsn = 'mysql:host=localhost;dbname=contatos2';
+    private static $dsn = 'mysql:host=localhost;dbname=contatos';
     private static $username = 'root';
     private static $password = '';
 
@@ -25,10 +25,10 @@ class DatabaseRepository {
 
     public static function getContactById($id) {
         $pdo = self::connect();
-        $sql = "SELECT * FROM contatos_info where id = :id";
+        $sql = "SELECT * FROM contatos_info WHERE id = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute(['id' =>$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);        
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public static function insertContact($nome, $telefone, $email) {
@@ -38,5 +38,4 @@ class DatabaseRepository {
         $stmt = $pdo->prepare($sql);
         return $stmt->execute(['nome' => $nome, 'telefone' => $telefone, 'email' => $email]);
     }
-
 }

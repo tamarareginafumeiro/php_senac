@@ -1,28 +1,23 @@
 <?php
-
 require_once 'DatabaseRepository.php';
 
-$acao = isset($_GET['acao']) ? $_GET['acao'] : '';
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 
-if($acao == 'listar') {
-    echo json_encode(DatabaseRepository::getAllItems());
-} else if($acao == 'adicionar') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    echo DatabaseRepository::addItem($data['nome_produto'], $data['quantidade']);
-} else if($acao == 'atualizar') {
-    $id = $_GET['id'];
-    $data = json_decode(file_get_contents('php://input'), true);    
-    echo DatabaseRepository::updateItem($id, $data['nome_produto'], $data['quantidade'], $data['comprado']);    
-}  else if($acao == 'deletar') {
-    $id = $_GET['id'];
-    echo DatabaseRepository::deleteItem($id);    
-} else {
-    echo "Ação não implementada";
-}
-
-switch ($acao) {
+switch($action) {
+    case 'list':
+        echo json_encode(DatabaseRepository::getAllContacts());
+        break;
+    case 'get':
+        $id = $_GET['id'];
+        echo json_encode(DatabaseRepository::getContactById($id));
+        break;
+    case 'add':
+        $data = json_decode(file_get_contents('php://input', true));
+        $success = DatabaseRepository::insertContact($data->nome, $data->telefone, $data->email);
+        echo json_encode($success);
+        break;
     default:
-        echo json_encode(['error' => 'Acao Invalida']);
+        echo json_encode(['error' => 'Acao invalida']);
 }
 
 ?>

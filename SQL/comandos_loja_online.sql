@@ -1,3 +1,7 @@
+--0 = false
+--1- true verdadeiro
+
+
 --Selecionando uma tabela
 SELECT * FROM loja_online;
 
@@ -160,8 +164,6 @@ LIMIT 20;
 select
 e.id,
 e.data_hora,
-p.produto,
-ep.quantidade
 from encomendas_produtos ep left join 
 encomendas e
 on e.id = ep.id_encomenda
@@ -209,7 +211,7 @@ select MAX(id), nome from clientes where email like "%@gmail.com";
 select AVG(preco_unidade) preco_medio from produtos; -- sem arrendoar
 select round( AVG(preco_unidade),2) preco_medio from produtos; --arredondando para duas casas após a virgula
 
---SUM - Permite ver o somatorio (calculo total) de cum conjunto de resultados.
+--SUM - Permite ver o somatorio (calculo total) de um conjunto de resultados.
 SELECT SUM(preco_unidade) total_preco from produtos;-- sem arrendoar
 SELECT round(SUM(preco_unidade),2) total_preco from produtos;--arredondando para duas casas após a virgula
 
@@ -276,7 +278,7 @@ from
 Group by id_encomenda
 
 
-
+SELECT *FROM clientes where status = "Ativo";
 
 
 

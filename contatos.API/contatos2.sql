@@ -1,8 +1,8 @@
--- Criando o banco de dados "contatos2"
-CREATE DATABASE IF NOT EXISTS contatos2;
+-- Criando o banco de dados "contatos"
+CREATE DATABASE IF NOT EXISTS contatos;
 
--- Usando o banco de dados "contatos2"
-USE contatos2;
+-- Usando o banco de dados "contatos"
+USE contatos;
 
 -- Criando a tabela "contatos_info"
 CREATE TABLE IF NOT EXISTS contatos_info (
