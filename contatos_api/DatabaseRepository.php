@@ -1,7 +1,7 @@
 <?php
 
 class DatabaseRepository {
-    private static $dsn = 'mysql:host=localhost;dbname=contatos';
+    private static $dsn = 'mysql:host=localhost;dbname=contatos2';
     private static $username = 'root';
     private static $password = '';
 
