@@ -21,6 +21,15 @@ class DatabaseRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getItemById($id) {
+        $pdo = self::connect();
+        $sql = "SELECT * FROM itens_compra WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public static function addItem($nome_produto, $quantidade) {
         $pdo = self::connect();
         $sql = "INSERT INTO itens_compra (nome_produto, quantidade) VALUES (:nome_produto, :quantidade)";
